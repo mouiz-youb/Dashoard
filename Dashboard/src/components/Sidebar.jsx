@@ -4,21 +4,33 @@ import {SiShopware} from "react-icons/si"
 import {MdOutlineCancel} from "react-icons/md"
 import { TooltipComponent } from '@syncfusion/ej2-react-popups'
 import {links} from "../data/dummy.jsx"
-import { useStateContext } from '../context/ContextProvider.jsx'
+import {UseNavbar,useScreenSize} from "../context/ZustendStore.jsx"
 const Sidebar = () => {
-  const activeMenu = true
-  // const {activeMenu ,setActiveMenu} =useStateContext()
-  const activeLink ="flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2  "
-  const normalLink ="flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2 "
+  const {activeMenu ,setActiveMenu}  = UseNavbar ((state)=>({
+    activeMenu:state.activeMenu ,
+    setActiveMenu:state.setActiveMenu
+  }))
+  const {screenSize,setScreenSize} =useScreenSize((state)=>({
+    screenSize :state.screenSize,
+    setScreenSize:state.setScreenSize
+  }))
+  const handleCloseSideBar =()=>{
+    if(activeMenu && screenSize <= 900 ){
+      setActiveMenu((prevactive)=>!prevactive)
+    }
+  }
+  console.log(`from sidebar i am here ${activeMenu}`)
+  const activeLink ="flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-white text-md m-2 bg-red-400 "
+  const normalLink ="flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg   text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2 "
   return (
     <div className='ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10'>
       {activeMenu && (<><div className='flex justify-between items-center'>
-        <Link to=" / " onClick={()=>{}} className='items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900 '> 
+        <Link to="/" onClick={handleCloseSideBar} className='items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900 '> 
         <SiShopware/><span>Shoppy</span></Link>
+        {console.log(`change the value of the state ${activeMenu}`)}
         <TooltipComponent content="Menu" position='BottomCenter'>
-          <button type='button' onClick={()=>{}} className='text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden'>
+          <button type='button' onClick={()=>setActiveMenu()} className='text-xl rounded-full p-3  hover:bg-light-gray mt-4 block md:hidden'>
             <MdOutlineCancel/>
-            {/* setActiveMenu((prevActiveMenu)=>!prevActiveMenu) */}
           </button>
         </TooltipComponent>
         </div>
@@ -29,9 +41,9 @@ const Sidebar = () => {
                 {item.title}
               </p>
               {item.links.map((link)=>(
-                <NavLink to={`/${link.path}`}
+                <NavLink to={`/${link.name}`}
                 key={link.name}
-                onClick={()=>{}}
+                onClick={handleCloseSideBar}
                 className={({isActive})=>isActive ? activeLink : normalLink}
                 >
                   {link.icon}

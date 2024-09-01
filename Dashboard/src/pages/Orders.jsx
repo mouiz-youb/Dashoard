@@ -2,7 +2,9 @@ import React from 'react'
 
 const Orders = () => {
   return (
-    <div>Orders</div>
+    <div className=' bg-gradient-to-r from-indigo-500'>
+      hello from Orders 
+    </div>
   )
 }
 

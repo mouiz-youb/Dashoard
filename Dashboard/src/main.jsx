@@ -4,16 +4,20 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
-import { ContextProvider } from './context/ContextProvider.jsx';
-
+import { StyledEngineProvider } from '@mui/material/styles';
 const root = createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
-    <ContextProvider>
+    <StyledEngineProvider injectFirst>
       <App />
-    </ContextProvider>
+    </StyledEngineProvider>
   </StrictMode>
 );
+{/* <React.StrictMode>
+<StyledEngineProvider injectFirst>
+  <Demo />
+</StyledEngineProvider>
+</React.StrictMode> */}
 // createRoot(document.getElementById('root')).render(
 //   // <ContextProvider>
 //       <StrictMode>
