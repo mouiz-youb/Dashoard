@@ -36,7 +36,7 @@ const Stacked = () => {
 
   const [hasNegativeValue, setHasNegativeValue] = useState(true);
   return (
-<Box sx={{ width: '100%', maxWidth: 600 }}>
+<Box sx={{ width: '100%', maxWidth: 600 , }}>
       <Stack direction="row">
         <TextField
           sx={{ minWidth: 150, mr: 5 }}
